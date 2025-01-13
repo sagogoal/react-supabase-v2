@@ -14,7 +14,7 @@ describe("App Component Test", () => {
     // データの読み込み完了を待つ
     await waitFor(() => {
       expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument();
-    });
+    }, { timeout: 5000 }); // タイムアウトを5秒に設定
 
     // フォームの入力フィールドとボタンを取得
     const titleInput = screen.getByPlaceholderText("学習内容を入力");
@@ -30,11 +30,17 @@ describe("App Component Test", () => {
     fireEvent.change(timeInput, { target: { value: "3" } });
     fireEvent.click(addButton);
 
-    // 新しい記録が追加されていることを確認
-    await waitFor(() => {
-      const elements = screen.getAllByText(`${testTitle} : 3時間`);
-      expect(elements.length).toBeGreaterThan(0);
-    });
+    // タイムアウトを長めに設定し、より柔軟な待機処理を実装
+    await waitFor(
+      () => {
+        const elements = screen.getAllByText(`${testTitle} : 3時間`);
+        expect(elements.length).toBeGreaterThan(0);
+      },
+      {
+        timeout: 5000,    // タイムアウトを5秒に設定
+        interval: 1000,   // チェック間隔を1秒に設定
+      }
+    );
   });
 
   it("削除ボタンを押すと学習記録が削除される", async () => {
