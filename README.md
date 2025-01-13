@@ -1,8 +1,22 @@
-# React + Vite
+# 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 技術要素
+ - React
+ - Vite
+ - Supabase
+ - Jest
+ - Testing Library
 
-Currently, two official plugins are available:
+## テストコード
+ - テストコードはsrc/App.test.jsxに記載しています。
+ - テストコードはJestとTesting Libraryを使用しています。
+ - テストコードはGitHub Actionsで実行されます。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### テストコードの実行
+ - テストコードを実行するには、以下のコマンドを実行します。
+   ```
+   npm run test
+   ```
+## 勉強になった点
+ - vite + testing-library の環境構築
+  - setup.ts とvite.config.jsの書き方をまずはテンプレートとして覚える
