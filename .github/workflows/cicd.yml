@@ -9,7 +9,7 @@ jobs:
         steps:
             - name: Checkout Repo
               uses: actions/checkout@v2
-            - name: setup Node
+            - name: Setup Node
               uses: actions/setup-node@v2
               with:
                   node-version: 21.x
@@ -19,7 +19,10 @@ jobs:
                   npm install
                   npm run build
                   npm install -g firebase-tools
-            - name: deploy to Firebase Hosting
+            - name: Test
+              run: |
+                  npm run test
+            - name: Deploy to Firebase Hosting
               run: |
                   firebase deploy --token $FIREBASE_TOKEN
               env:
