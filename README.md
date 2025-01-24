@@ -27,3 +27,4 @@
 - [React Testing Libraryの使い方](https://qiita.com/ossan-engineer/items/4757d7457fafd44d2d2f)
 - [【Reactテスト入門】React Testing Library/Jest/Vitestで学ぶフロントエンドテスト入門](https://www.udemy.com/course/react-frontend-test-tutorial/)
   - ６章のVitest + RTLの環境構築を参考にした。結局色々修正したので、完成系はこのリポジトリを参考
+- [cloneしたリポジトリを別リポジトリとしてリモートにpushする](https://qiita.com/SR_midori/items/52730907c1cddeb78b4d)
