@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import App from "./App";
+import App from "../App";
 
 describe("App Component Test", () => {
   it("タイトルが表示されていること", () => {

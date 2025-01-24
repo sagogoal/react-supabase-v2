@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 // SupabaseのURLとキーを設定
@@ -7,13 +7,19 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+interface StudyRecord {
+  id: number;
+  title: string;
+  time: number;
+}
+
 function App() {
   //フォームの入力内容を保持
   const [studyTitle, setStudyTitle] = useState("");
   const [studyTime, setStudyTime] = useState("");
 
   //画面描画に使うSupabaseのデータを保持
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState<StudyRecord[]>([]);
 
   //画面の状態を管理
   const [loading, setLoading] = useState(true);
@@ -81,7 +87,7 @@ function App() {
 
   return (
     <div>
-      <h2>学習記録</h2>
+      <h2>学習記録v2</h2>
       <p>学習内容</p>
       <input  placeholder="学習内容を入力" type="text" value={studyTitle} onChange={onChangeStudyTitle} />
       <p>学習時間</p>
