@@ -5,7 +5,7 @@ import App from "../App";
 describe("App Component Test", () => {
   it("タイトルが表示されていること", () => {
     render(<App />);
-    expect(screen.getByText("学習記録")).toBeInTheDocument();
+    expect(screen.getByText("学習記録v2")).toBeInTheDocument();
   });
 
   it("フォームに学習内容と時間を入力して登録ボタンを押すと新たに記録が追加されている", async () => {
