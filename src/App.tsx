@@ -204,6 +204,7 @@ function App() {
                           w={4}
                           h={4}
                           color="red.400"
+                          data-testid="delete-button"
                         />
                       </Td>
                     </Tr>
