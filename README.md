@@ -9,14 +9,19 @@
  - GitHub Actions
  - Firebase hosting
  - Supabase
- - Chakra UI
+ - Chakra UI V2
 
 
 ## 注意点
 - 課題2[react-supabase](https://github.com/sagogoal/react-supabase)で作ったFirebase Hostingのデプロイは、この課題3のデプロイにより上書きされます（同じ環境を使用しているため）
+- TASK.mdに、課題リストを記載。V2リポジトリで修正した内容はここを参照
 
 ## 勉強になった点
  - vitest + testing-library でのモックの作り方
+ - prettier.rcがないとVSCodeやCursorで保存時修正が効かない(settings.jsonにprettierの設定を見るオプションがある
+
+## 手順メモ
+- chakraUIはプロバイダー設定をして、各種インストールをすることで利用可能
 
 ### 参考にした資料
 - [【2024年最新版】0からReactを勉強するならこのロードマップに従え！](https://qiita.com/Sicut_study/items/7d8c6f309dddda1a3961#jisou%E3%81%AE%E3%83%A1%E3%83%B3%E3%83%90%E3%83%BC%E5%8B%9F%E9%9B%86%E4%B8%AD)
