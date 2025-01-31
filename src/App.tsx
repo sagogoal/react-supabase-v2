@@ -13,15 +13,11 @@ import {
   VStack,
   Input,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { CustomModal } from "./components/morecures/CustomModal";
 
 // SupabaseのURLとキーを設定
 const supabaseUrl = "https://amjcstrouwnkdjcvrvrz.supabase.co";
@@ -31,15 +27,22 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 interface StudyRecord {
-  id: number;
+  id: string;
   title: string;
-  time: number;
+  time: string;
 }
 
 function App() {
   //フォームの入力内容を保持
   const [studyTitle, setStudyTitle] = useState("");
   const [studyTime, setStudyTime] = useState("");
+
+  //編集対象のレコードを保持
+  const [editingRecord, setEditingRecord] = useState<StudyRecord>({
+    id: "",
+    title: "",
+    time: "",
+  });
 
   //画面描画に使うSupabaseのデータを保持
   const [records, setRecords] = useState<StudyRecord[]>([]);
@@ -56,7 +59,7 @@ function App() {
     setStudyTime(event.target.value);
   };
 
-  const onDeleteStudy = async (id: number) => {
+  const onDeleteStudy = async (id: string) => {
     try {
       const { error } = await supabase.from("study-record").delete().eq("id", id);
 
@@ -70,13 +73,13 @@ function App() {
       }
     }
   };
-  const onModifyStudy = async (id: number, title: string, time: number) => {
+  const onModifyStudy = async (id: string, title: string, time: string) => {
+    console.log(id, title, time);
     try {
       const { error } = await supabase
         .from("study-record")
-        .update({ title: title, time: time })
-        .eq("id", id);
-
+        .update({ id: id, title: title, time: time })
+        .match({ id: id });
       if (error) throw error;
       fetchRecords();
     } catch (err: unknown) {
@@ -105,6 +108,11 @@ function App() {
         setError("An unknown error occurred");
       }
     }
+  };
+
+  const onOpenModal = (record: StudyRecord) => {
+    setEditingRecord(record);
+    onOpen();
   };
 
   // データを取得する関数
@@ -169,35 +177,13 @@ function App() {
                       <Td>{record.title}</Td>
                       <Td>{record.time}時間</Td>
                       <Td>
-                        {/* <Button colorScheme="blue" size="sm" onClick={onOpen} margin={"0 5px"}>
-                          編集
-                        </Button> */}
-                        <EditIcon onClick={onOpen} w={4} h={4} />
-                        <Modal isOpen={isOpen} onClose={onClose}>
-                          <ModalOverlay />
-                          <ModalContent>
-                            <ModalHeader>Modal Title</ModalHeader>
-                            <ModalCloseButton />
-                            <ModalBody>
-                              <p>body</p>
-                            </ModalBody>
-
-                            <ModalFooter>
-                              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                                Close
-                              </Button>
-                              <Button variant="ghost">Secondary Action</Button>
-                            </ModalFooter>
-                          </ModalContent>
-                        </Modal>
-                        {/* <Button
-                          colorScheme="red"
-                          size="sm"
-                          onClick={() => onDeleteStudy(record.id)}
-                          margin={"0 5px"}
-                        >
-                          削除
-                        </Button> */}
+                        <EditIcon
+                          onClick={() => {
+                            onOpenModal(record);
+                          }}
+                          w={4}
+                          h={4}
+                        />
                         <DeleteIcon
                           onClick={() => onDeleteStudy(record.id)}
                           margin={"0 10px"}
@@ -208,13 +194,55 @@ function App() {
                         />
                       </Td>
                     </Tr>
-                  ))}
+                  ))}{" "}
                 </Tbody>
               </Table>
             </TableContainer>
           )}
         </VStack>
       </VStack>
+      <CustomModal
+        isOpen={isOpen}
+        onClose={onClose}
+        title="学習内容の編集"
+        action={
+          <Button
+            colorScheme="blue"
+            onClick={() => onModifyStudy(editingRecord.id, editingRecord.title, editingRecord.time)}
+            mr={3}
+          >
+            更新
+          </Button>
+        }
+      >
+        <FormControl>
+          <FormLabel>学習内容</FormLabel>
+          <Input
+            placeholder="学習内容を入力してね"
+            value={editingRecord.title}
+            onChange={(e) =>
+              setEditingRecord({
+                ...editingRecord,
+                title: e.target.value,
+              })
+            }
+          />
+        </FormControl>
+
+        <FormControl mt={4}>
+          <FormLabel>学習時間</FormLabel>
+          <Input
+            placeholder="学習時間を入力してね"
+            value={editingRecord.time}
+            onChange={(e) =>
+              setEditingRecord({
+                ...editingRecord,
+                time: e.target.value,
+              })
+            }
+          />
+        </FormControl>
+      </CustomModal>
     </Container>
   );
 }
