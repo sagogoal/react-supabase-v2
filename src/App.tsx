@@ -82,6 +82,7 @@ function App() {
         .match({ id: id });
       if (error) throw error;
       fetchRecords();
+      onClose();
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -204,7 +205,7 @@ function App() {
       <CustomModal
         isOpen={isOpen}
         onClose={onClose}
-        title="学習内容の編集"
+        title="記録編集"
         action={
           <Button
             colorScheme="blue"
